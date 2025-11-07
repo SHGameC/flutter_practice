@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins_repository.dart';
 import 'package:flutter/material.dart';
 
 class CryptoListScreen extends StatefulWidget {
@@ -12,12 +12,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
   @override
   Widget build(BuildContext context) {
     const coinName = 'BitCoin';
-    final dio = Dio();
-
-    void getHttp() async {
-      final response = await dio.get('https://dart.dev');
-      print(response);
-    }
+    final block = CryptoCoinsRepository(cryptoCurrency: "BTC");
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +42,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
             ),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              getHttp();
+              block.getCoinsList();
               Navigator.of(
                 context,
               ).pushNamed('/coins-list', arguments: coinName);
