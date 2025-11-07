@@ -1,4 +1,5 @@
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins_repository.dart';
+import 'package:crypto_coins_list/repositories/crypto_coins/models/crypto_coin.dart';
 import 'package:flutter/material.dart';
 
 class CryptoListScreen extends StatefulWidget {
@@ -9,11 +10,10 @@ class CryptoListScreen extends StatefulWidget {
 }
 
 class _CryptoListScreenState extends State<CryptoListScreen> {
+  List<CryptoCoin>? _cryptoCoinsList;
+
   @override
   Widget build(BuildContext context) {
-    const coinName = 'BitCoin';
-    final block = CryptoCoinsRepository(cryptoCurrency: "BTC");
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -23,9 +23,10 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
         ),
       ),
       body: ListView.separated(
-        itemCount: 10,
+        itemCount: _cryptoCoinsList?.length ?? 0,
         separatorBuilder: (context, index) => Divider(),
         itemBuilder: (context, i) {
+          final price = _cryptoCoinsList?[i].priceInUSD ?? 0;
           return ListTile(
             leading: Image.asset(
               'assets/png/bitcoing_no_background.png',
@@ -33,21 +34,28 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
               width: 40,
             ),
             title: Text(
-              coinName,
+              _cryptoCoinsList?[i].coinName ?? "...",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             subtitle: Text(
-              '\$150000',
+              '\$$price',
               style: Theme.of(context).textTheme.labelSmall,
             ),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              block.getCoinsList();
-              Navigator.of(
-                context,
-              ).pushNamed('/coins-list', arguments: coinName);
+              Navigator.of(context).pushNamed(
+                '/coins-list',
+                arguments: _cryptoCoinsList?[i].coinName,
+              );
             },
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.download),
+        onPressed: () async {
+          _cryptoCoinsList = await CryptoCoinsRepository.getCoinsList();
+          setState(() {});
         },
       ),
     );
