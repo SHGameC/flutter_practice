@@ -13,6 +13,12 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
   List<CryptoCoin>? _cryptoCoinsList;
 
   @override
+  void initState() {
+    _loadCryptoCoins();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -49,13 +55,11 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.download),
-        onPressed: () async {
-          _cryptoCoinsList = await CryptoCoinsRepository.getCoinsList();
-          setState(() {});
-        },
-      ),
     );
+  }
+
+  Future<void> _loadCryptoCoins() async {
+    _cryptoCoinsList = await CryptoCoinsRepository.getCoinsList();
+    setState(() {});
   }
 }
