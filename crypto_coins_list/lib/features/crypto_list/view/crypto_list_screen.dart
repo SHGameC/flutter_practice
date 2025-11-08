@@ -23,16 +23,14 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
         ),
       ),
       body: ListView.separated(
+        padding: const EdgeInsets.only(top: 16),
         itemCount: _cryptoCoinsList?.length ?? 0,
         separatorBuilder: (context, index) => Divider(),
         itemBuilder: (context, i) {
           final price = _cryptoCoinsList?[i].priceInUSD ?? 0;
+
           return ListTile(
-            leading: Image.asset(
-              'assets/png/bitcoing_no_background.png',
-              height: 40,
-              width: 40,
-            ),
+            leading: Image.network(_cryptoCoinsList![i].imageURL),
             title: Text(
               _cryptoCoinsList?[i].coinName ?? "...",
               style: Theme.of(context).textTheme.bodyMedium,

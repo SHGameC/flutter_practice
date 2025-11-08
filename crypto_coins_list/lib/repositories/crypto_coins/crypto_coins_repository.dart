@@ -14,11 +14,12 @@ class CryptoCoinsRepository {
         .map(
           (e) => CryptoCoin(
             coinName: e.key,
-            priceInUSD: (e.value as Map<String, dynamic>)['USD'],
+            priceInUSD: (e.value as Map<String, dynamic>)['USD']['PRICE'],
+            imageURL: 'https://www.cryptocompare.com/${(e.value as Map<String, dynamic>)['USD']['IMAGEURL']}',
           ),
         )
         .toList();
-    debugPrint(cryptoCoinsList[0].priceInUSD.toString());
+    debugPrint(cryptoCoinsList[0].imageURL);
     return cryptoCoinsList;
   }
 }
