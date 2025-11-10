@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CryptoCoinsRepository {
   
-  static Future<List<CryptoCoin>> getCoinsList() async {
+  Future<List<CryptoCoin>> getCoinsList() async {
 
     final response = await Dio().get(
       "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,AVAX&tsyms=USD",

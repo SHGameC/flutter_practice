@@ -36,7 +36,9 @@ dependencies:
 
   dio: ^5.9.0
 
-  get_it: ^8.2.0
+  get_it: ^9.0.5
+
+  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   flutter_test:
